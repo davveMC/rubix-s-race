@@ -14,20 +14,6 @@ for(const card of cards1){
     cards.push(`${card}S`)
 }
 
-let cards2 = {}
-let count = 0 
-cards.forEach(card => {  // for each image url
-    const image = new Image();
-    image.src = `../assets/cards/${card}.png`;
-    image.onload = ()=>{ 
-        count += 1;
-        if(count === cards1.length){ // have all loaded????
-            images = cards2; // call function to start rendering
-            loaded = true
-        }
-    }
-    cards2[card] = image; // add loading image to images array
-});
 
 function addp(data) {
     let players = data[0]
