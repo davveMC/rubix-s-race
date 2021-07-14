@@ -1,0 +1,40 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Multiplayer Game</title>
+    <link href="./styles/stylesheet.css" rel="stylesheet"></link>
+    <link href="./styles/main-menu.css" rel="stylesheet"></link>
+    <link href="./styles/lobby.css" rel="stylesheet"></link>
+    <link href="./styles/game.css" rel="stylesheet"></link>
+</head>
+<body>
+    <div id="main-menu" class="game-menu">
+        <p class="menu-logo unselectable">Rubic's Race!</p>
+        <input type="text" id="name" class="name" value="Name" autocomplete="off">
+        <input type="text" id="room-id" class="room-id" value="Room-ID" autocomplete="off">
+        <button class="start-button" onclick="start(self)">Join</button>
+    </div>
+    <div id="lobby" class="lobby">
+        <button class="back-button" onclick="back()">Back</button>
+        <div id="roomid" class="roomid">ROOM-ID GOES HERE</div>
+        <div id="lobby-list" class="lobby-list">
+            <div id="smallerbox" class="smallerbox">
+                <button class="start-game" onclick="startgame()">Start Game</button>
+            </div>
+        </div>
+    </div>
+    <div id="game" class="game">
+        <button class="hit" id="hit" onclick="hit()">Hit</button>
+        <button class="stand" id="stand" onclick="stand()">Stand</button>
+        <div class="total" id="total"> Total</div>
+        <canvas id="canvas">
+        </canvas>
+    </div>
+    <script src="./js/helpfulstuff.js"></script>
+    <script src="./js/logic.js"></script>
+    <script src="./js/buttons.js"></script>
+    <script src="./js/input_fields.js"></script>
+    <script src="./js/client.js"></script>
+    <script src="./js/main.js"></script>
+</body>
+</html>

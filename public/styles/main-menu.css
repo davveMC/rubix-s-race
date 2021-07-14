@@ -1,0 +1,115 @@
+.game-menu {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: block;
+}
+
+.menu-logo {
+    position: relative;
+    color: whitesmoke;
+    font-size: 100px;
+    text-align: center;
+    top: 50px;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+}
+
+.name {
+    position: absolute;
+    background-color: transparent;
+    height: 50px;
+    width: 250px;
+    border: 4px solid whitesmoke;
+    border-radius: 75px;
+    margin: 0;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -200%);
+    transform: translate(-50%, -200%);
+    transition: 0.3s;
+    color: whitesmoke;
+    font-size: larger;
+    text-align: center;
+}
+
+.name:hover {
+    background-color: rgba(255, 255, 0, 0.103);
+    border-color: rgba(255, 255, 0, 0.575);
+    color: black;
+    text-align: center;
+    transition: 0.3s;
+}
+.name:focus {
+    outline: none !important;
+    text-align: center;
+    background-color: rgba(255, 255, 0, 0.418);
+    border-color: rgba(255, 255, 0, 0.938);
+    color: black;
+    transition: 1s;
+}
+
+.room-id {
+    position: absolute;
+    background-color: transparent;
+    height: 50px;
+    width: 250px;
+    border: 4px solid whitesmoke;
+    border-radius: 75px;
+    margin: 0;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    transition: 0.3s;
+    color: whitesmoke;
+    font-size: larger;
+    text-align: center;
+}
+
+.room-id:hover {
+    background-color: rgba(255, 255, 0, 0.103);
+    border-color: rgba(255, 255, 0, 0.575);
+    color: black;
+    transition: 0.3s;
+    text-align: center;
+}
+.room-id:focus {
+    outline: none !important;
+    text-align: center;
+    background-color: rgba(255, 255, 0, 0.418);
+    border-color: rgba(255, 255, 0, 0.938);
+    color: black;
+    transition: 1s;
+}
+
+.start-button {
+    position: absolute;
+    background-color: transparent;
+    height: 50px;
+    width: 250px;
+    border: 4px solid whitesmoke;
+    border-radius: 75px;
+    margin: 0;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, 100%);
+    transform: translate(-50%, 100%);
+    transition: 0.3s;
+    color: whitesmoke;
+    font-size: larger;
+}
+
+.start-button:hover {
+    background-color: rgba(255, 255, 0, 0.246);
+    border-color: yellow;
+    color: black;
+    transition: 0.3s;
+}
+
+.start-button:active {
+    background-color: #c7c7009f;
+    border-color: yellow;
+    color: black;
+    transition: 0.3s;
+}

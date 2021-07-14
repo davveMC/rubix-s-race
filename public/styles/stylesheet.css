@@ -1,0 +1,15 @@
+body {
+    background-image: url("../assets/bg1.png");
+    background: linear-gradient(to bottom right, #99ff99 0%, #3366cc 100%);
+    margin: 0px;
+    height: 100%;
+    width: 100%;
+}
+.unselectable {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
