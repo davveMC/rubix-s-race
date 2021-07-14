@@ -19,7 +19,8 @@ function addp(data) {
     let players = data[0]
     let player_id = data[1]
     let parent = getEl("smallerbox")
-    while(parent.children[1]){
+    var button = parent.children[0]
+    while(parent.children[0]){
         parent.removeChild(parent.lastChild)
     }
     for (i in players) {
@@ -36,4 +37,5 @@ function addp(data) {
         // image.onclick = () => send("kick", player_id[i]);
         // getEl(plr).appendChild(image)
     }
+    parent.append(button)
 }

@@ -4,7 +4,7 @@ game = getEl("game")
 function start() {
 
     if (name_input.value == "Name") {
-        name_input.value = "unnamed_12312"
+        name_input.value = `default_${Math.floor(Math.random()*10000)}`
     }
     if (room_input.value == "Room-ID") {
         room_input.value = "default"

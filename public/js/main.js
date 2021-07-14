@@ -46,20 +46,7 @@ function gameLoop(timeStamp) {
 
 function draw() {
     if (loaded && game_is_active) {
-        for(let i in hand) {
-            let x = 0
-            let y = 0
-            let img = images[hand[i]]
-            let img_size = 100
-            let img_size_height = img_size * (img.height/img.width)
-            let img_size_width = img_size
-            // Scale
-            x = ( (+i+1) / (hand.length+1) ) * width - (img_size/2)
-            y = height*0.7
-                context.drawImage(img, x, y, img_size_width, img_size_height)
-        }
-        let totalElement = getEl("total")
-        totalElement.innerHTML = `Total: ${hand_sum}`
+        
     }
 }
 
