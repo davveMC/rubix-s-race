@@ -5,6 +5,7 @@ const express = require("express")
 const http = require("http")
 const websocketServer = require("websocket").server
 const { checkServerIdentity } = require("tls")
+const { captureRejectionSymbol } = require("events")
 // const { exit } = require("process")
 
 const app = express()
@@ -237,26 +238,9 @@ class Game{
         this.timeout = 30
         this.ongoing = false
         this.broadcast = ()=>{}
-        let temp_cards = [2,3,4,5,6,7,8,9,10,'A','J','Q','K']
-        let cards = []
-        for(const card of temp_cards){
-            cards.push(`${card}C`)
-            cards.push(`${card}D`)
-            cards.push(`${card}H`)
-            cards.push(`${card}S`)
-        }
-        this.cards = shuffle(cards)
-        rooms[this.room_id].broadcast("start_game")
-    }
-    deal_cards(){
-        for(let player of this.playerids){
-            let hand = []
-            for(let n = 0; n < 2; n++){
-                hand.push(this.cards.shift())
-            }
-            this.players[player] = {"hand":hand}
-        }
-        rooms[this.room_id].broadcast("game_data", this.game_data())
+        this.rubixgrid = this.shuffle_colors()
+        console.log(this.rubixgrid)
+        rooms[this.room_id].broadcast("start_game", this.rubixgrid)
     }
     game_data(){
         let data = {
@@ -264,25 +248,8 @@ class Game{
         }
         return data
     }
-    hit(client) {
-        this.players[client.id].total = this.calc_hand(this.players[client.id].hand)
-        if (this.players[client.id].total < 21) {
-            // console.log(this.players[client.id].hand)
-            this.players[client.id].hand.push(this.cards.shift())
-            rooms[this.room_id].broadcast("game_data", this.game_data())
-        } else {
-            this.stand(client)
-        }
-    }
-    stand(client) {
-        this.players[client.id].total = this.calc_hand(this.players[client.id].hand)
-        let check_stands = []
-        this.players[client.id].stand = true
-        check_stands = Object.values(this.players).every(item => item.stand)
-        if (check_stands){
-            rooms[this.room_id].broadcast("game_result", this.game_result())
-        }
-    }
+
+
     game_result(){
         let data = {}
         let alltotals = Object.values(this.players).map(client => client.total)
@@ -305,34 +272,9 @@ class Game{
         
         return data 
     }
-
-    calc_hand(hand){
-        let total = 0
-        for(let card of hand){
-        card = card[0]
-            if (Number(card)){
-                total += Number(card)
-            } else {
-                switch(card){
-                    case "K":
-                        total += 10;
-                        break;
-                    case "Q":
-                        total += 10;
-                        break;
-                    case "J":
-                        total += 10;
-                        break;
-                    case "A":
-                        if (total <= 10) {
-                        total += 11  
-                        } else {
-                        total += 1
-                        }
-                }
-            }
-        }
-        return total
+    shuffle_colors(){
+        let colors = shuffle(repeat(["red", "blue", "yellow", "orange", "black", "white"], 4))
+        return [colors[0],colors[1],colors[2],colors[3],colors[4],colors[5],colors[6],colors[7],colors[8]]
     }
 }
 
@@ -345,3 +287,9 @@ function shuffle(arr){
     }
     return arr
 }
+
+function repeat(arr, n){
+    var a = [];
+    for (var i=0;i<n;[i++].push.apply(a,arr));
+    return a;
+  }

@@ -39,3 +39,13 @@ function addp(data) {
     }
     parent.append(button)
 }
+
+function draw_grid(data){
+    let parent = getEl("colorgrid")
+    for(let i in data){
+        let color = document.createElement("div")
+        color.id = data[i]
+        color.style = `background-color: ${data[i]}; border: grey`
+        parent.appendChild(color)
+    }
+}

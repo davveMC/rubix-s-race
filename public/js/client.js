@@ -24,6 +24,7 @@ ws.onmessage = message => {
     if (method == "start_game") {
         lobby.style.display = "none"
         game.style.display = "block"
+        draw_grid(data)
     }
     if (method == "game_data") {
         game_data = data
