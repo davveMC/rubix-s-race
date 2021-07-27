@@ -1,4 +1,5 @@
 let shift = false
+var keyIndex = 0
 document.addEventListener("keydown", event => {
     let key = event.key.toLocaleLowerCase()
     if (key == "shift"){
@@ -7,7 +8,8 @@ document.addEventListener("keydown", event => {
     if ("wasd ".includes(key) && game_is_active){
         send("move", {
             "shift": shift,
-            "key": key
+            "key": key,
+            "keyIndex": keyIndex 
         })
     }
 })

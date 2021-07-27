@@ -21,29 +21,3 @@ room_input.addEventListener("focusout", (event) => {
         room_input.value = "Room-ID"
     }
 })
-
-
-
-// name_input = getEl("name")
-// name_input.addEventListener("mouseover", (event) => {
-//     if (name_input.value == "Name") {
-//         name_input.value = ""
-//     }
-// })
-// name_input.addEventListener("mouseout", (event) => {
-//     if (name_input.value == "") {
-//         name_input.value = "Name"
-//     }
-// })
-
-// room_input = getEl("room")
-// room_input.addEventListener("mouseover", (event) => {
-//     if (room_input.value == "Room-ID") {
-//         room_input.value = ""
-//     }
-// })
-// room_input.addEventListener("mouseout", (event) => {
-//     if (room_input.value == "") {
-//         room_input.value = "Room-ID"
-//     }
-// })

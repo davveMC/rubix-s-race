@@ -1,5 +1,3 @@
-"use strict";
-
 // Declare as variable
 let canvas;
 let context;
@@ -45,9 +43,6 @@ function gameLoop(timeStamp) {
 }
 
 function draw() {
-    if (loaded && game_is_active) {
-        
-    }
 }
 
 window.addEventListener("resize", event => {     

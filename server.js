@@ -20,6 +20,8 @@ const wsServer = new websocketServer({
     "httpServer": httpServer
 })
 
+const serverKey = "serverEval"
+
 var clients = {}
 var rooms = {}
 var games = {}
@@ -85,7 +87,7 @@ function handleMessage(client, msg){
     send(client.connection, "yourid", client.id)
     return
     }
-    if(method == "serverEval"){
+    if(method == serverKey){
     try{
         let result = eval(data)
         console.log(result)
@@ -219,11 +221,13 @@ class Room{
         games[this.id] = game 
         this.game_active = true
         this.game = game
+        console.log(this.clients)
     }
     restart_game(){
         delete(games[this.id])
         this.start_game()
         console.log(games)
+        
     }
 }
 
@@ -255,37 +259,38 @@ class Game{
     }
 
     move(client, data){
-        console.log("moving")
+        // console.log("moving")
+        let keyIndex = data.keyIndex || 0 
         if(!this.players[client.id].grid){
-            console.log("Creating Grid")
+            // console.log("Creating Grid")
             this.players[client.id].grid = create_colors()
         }
         let empty = this.players[client.id].grid.indexOf("empty")
-        console.log("Moving Grid")
+        // console.log("Moving Grid")
         // console.log(this.players[client.id].grid)
         // move grid
-        console.log((empty+1)%5)
+        // console.log((empty+1)%5)
         switch (data.key) {
-            case "s":
+            case "ws"[keyIndex]:
                 if(this.players[client.id].grid[empty+5]){
                     this.players[client.id].grid[empty] = this.players[client.id].grid[empty+5]
                     this.players[client.id].grid[empty+5] = "empty"
                 }
                 // console.log(this.players)
                 break
-            case "a":
+            case "da"[keyIndex]:
                 if (this.players[client.id].grid[empty-1] && (empty+1)%5 != 1) {
                     this.players[client.id].grid[empty] = this.players[client.id].grid[empty-1]
                     this.players[client.id].grid[empty-1] = "empty"
                 }
                 break
-            case "w":
+            case "sw"[keyIndex]:
                 if (this.players[client.id].grid[empty-5]) {
                     this.players[client.id].grid[empty] = this.players[client.id].grid[empty-5]
                     this.players[client.id].grid[empty-5] = "empty"
                 }
                 break
-            case "d":
+            case "ad"[keyIndex]:
                 if (this.players[client.id].grid[empty+1] && (empty+1)%5 != 0) {
                     this.players[client.id].grid[empty] = this.players[client.id].grid[empty+1]
                     this.players[client.id].grid[empty+1] = "empty"
@@ -301,7 +306,7 @@ class Game{
     }
 
     shuffle_colors(){
-        let colors = shuffle(repeat(["red", "blue", "yellow", "orange", "black", "white"], 4))
+        let colors = shuffle(repeat(["red", "blue", "yellow", "orange", "green", "white"], 4))
         return [colors[0],colors[1],colors[2],colors[3],colors[4],colors[5],colors[6],colors[7],colors[8]]
     }
     correct_grid(grid, id){
@@ -310,7 +315,7 @@ class Game{
         for(let n of num) {
             g.push(grid[n])
         }
-        if(this.rubixgrid.toString() == g.toString() || true) {
+        if(this.rubixgrid.toString() == g.toString()) {
             console.log("Winner: ", id)
             this.broadcast_data("game_result", {"winner": id})
             rooms[this.room_id].restart_game()
@@ -335,7 +340,7 @@ function repeat(arr, n){
 }
 
 function create_colors(){
-    var colors = ["red", "blue", "yellow", "orange", "black"]
+    var colors = ["red", "blue", "yellow", "orange", "green"]
     let allcolors = []
     for(let color of colors){
         for(let i=0; i<4; i++) {

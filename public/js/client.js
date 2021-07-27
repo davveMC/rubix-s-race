@@ -1,6 +1,8 @@
 let serverAdress = "83.254.146.244:25565"
 var game_data;
 var myid;
+var myscore = 0
+var theirscore = 0
 // serverAdress = "drawline.herokuapp.com"
 const ws = new WebSocket("ws://" + serverAdress)
 ws.onmessage = message => {
@@ -42,6 +44,13 @@ ws.onmessage = message => {
         case "game_result":
             delete_grids()
             console.log(data)
+            if (data.winner == myid){
+                myscore += 1
+                getEl("score1").innerHTML = `Score: ${myscore}`
+            } else {
+                theirscore += 1
+                getEl("score2").innerHTML = `Score: ${theirscore}`
+            }
             break
     }
 }

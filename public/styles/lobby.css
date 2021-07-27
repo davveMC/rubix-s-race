@@ -82,16 +82,20 @@
 
 .start-game-button-holder {
     background-color: transparent;
+    margin: 0px;
+    /* background-color: green; */
 }
 .start-game {
+    margin: 0px;
+    position: relative;
     height: 100%;
     width: 100%;
     background-color: transparent;
-    border: 4px solid white;
+    border: 0px solid white;
     border-radius: 10px;
 }
 .start-game:hover {
-    background-color: rgba(255, 255, 0, 0.246);
+    background-color: rgba(0, 38, 255, 0.205);
     border-color: yellow;
     color: black;
     transition: 0.3s;

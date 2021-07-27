@@ -19,7 +19,7 @@ canvas {
     position: absolute;
     height: 200px;
     width: 200px;
-    background-color: rgb(187, 187, 187);
+    background-color: rgba(187, 187, 187, 0.308);
     top: 50%;
     transform: translate(50%,-50%);
     right: 50%;
@@ -40,11 +40,11 @@ canvas {
     border-radius: 8px;
 }
 
-.yourgrid {
+.grid1 {
     position: absolute;
     height: 600px;
     width: 600px;
-    background-color: rgb(187, 187, 187);
+    background-color: rgba(187, 187, 187, 0.308);
     left: 5%;
     bottom: 50%;
     transform: translate(0, 50%);
@@ -60,18 +60,18 @@ canvas {
     border-radius: 8px;
 }
 
-.yourgrid>div {
+.grid1>div {
     padding: 5px;
     border-radius: 8px;
 }
-.theirgrid {
+.grid2 {
     position: absolute;
     height: 600px;
     width: 600px;
     right: 5%;
     bottom: 50%;
     transform: translate(0, 50%);
-    background-color: rgb(187, 187, 187);
+    background-color: rgba(187, 187, 187, 0.308);
 
     display: grid;
     grid-template-columns: repeat(auto-fill, 18%);
@@ -84,7 +84,42 @@ canvas {
     border-radius: 8px;
 }
 
-.theirgrid>div {
+.grid2>div {
     padding: 5px;
     border-radius: 8px;
+}
+
+.name1 {
+    height: 150px;
+    width: 500px;
+    background-color: white;
+
+    position: absolute;
+    left: calc(5% + 50px);
+    bottom: calc(50% + 400px);
+    transform: translate(0, 50%);
+    border: 3px solid grey;
+    border-radius: 8px;
+}
+
+.name1>h1 {
+    text-align: center;
+}
+
+.name2 {
+    height: 150px;
+    width: 500px;
+    background-color: white;
+
+    position: absolute;
+    right: calc(5% + 50px);
+    bottom: calc(50% + 400px);
+    transform: translate(0, 50%);
+    border: 3px solid grey;
+    border-radius: 8px;
+}
+
+.name2>h1 {
+    text-align: center;
+
 }

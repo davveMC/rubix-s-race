@@ -31,6 +31,5 @@ function back() {
 }
 
 function startgame() {
-    game_is_active = true
     send("start_game", "")
 }
