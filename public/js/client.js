@@ -7,33 +7,42 @@ ws.onmessage = message => {
     const msg = JSON.parse(message.data);
     const method = msg.method
     const data = msg.data
-
-    console.log(msg)
-    if (method == "connect") {
-        
-    }
-    if (method == "text") {
-        console.log(msg.data)
-    }
-    if (method == "eval") {
-        eval(data)
-    }
-    if (method == "player_change") {
-        addp(data)
-    }
-    if (method == "start_game") {
-        lobby.style.display = "none"
-        game.style.display = "block"
-        draw_grid(data)
-    }
-    if (method == "game_data") {
-        game_data = data
-        hand = game_data.players[myid].hand
-        game_is_active = true
-        calc_hand()
-    }
-    if (method == "yourid") {
-        myid = data
+    // console.log("recieved a message")
+    // console.log(msg)
+    switch (method) {
+        case "grids":
+            update_grids(data)
+            break
+        case "connect":
+            console.log("Connected to server")
+            break
+        case "text":
+            console.log(msg.data)
+            break
+        case "eval":
+            eval(data)
+            break
+        case "player_change":
+            addp(data)
+            break
+        case "start_game":
+            lobby.style.display = "none"
+            game.style.display = "block"
+            game_is_active = true
+            draw_grid(data)
+            draw_grids()
+            break
+        case "game_data":
+            game_data = data
+            hand = game_data.players[myid].hand
+            break
+        case "yourid":
+            myid = data
+            break
+        case "game_result":
+            delete_grids()
+            console.log(data)
+            break
     }
 }
 

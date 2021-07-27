@@ -1,18 +1,7 @@
 var game_is_active = false
-var hand;
-var hand_sum;
-
 const getEl = id => document.getElementById(id)
-cards1 = [2,3,4,5,6,7,8,9,10,'A','J','Q','K']
-cards = []
 var loaded = false  
 var images = {}
-for(const card of cards1){
-    cards.push(`${card}C`)
-    cards.push(`${card}D`)
-    cards.push(`${card}H`)
-    cards.push(`${card}S`)
-}
 
 
 function addp(data) {
@@ -45,7 +34,48 @@ function draw_grid(data){
     for(let i in data){
         let color = document.createElement("div")
         color.id = data[i]
-        color.style = `background-color: ${data[i]}; border: grey`
+        color.style = `background-color: ${data[i]}; border: 2px solid grey;`
         parent.appendChild(color)
+    }
+}
+
+function draw_grids(){
+    let colors = create_colors()
+    for(let id_ of ["yourgrid", "theirgrid"]) {
+        let parent = getEl(id_)
+        console.log(colors, parent)
+        for(let i in colors){
+            let color = document.createElement("div")
+            color.id = colors[i]
+            color.style = `background-color: ${colors[i]}; border: 2px solid grey;`
+            parent.appendChild(color)
+        }
+    }
+}
+
+function update_grids(data) {
+    let HTMLgrids = [getEl("yourgrid"), getEl("theirgrid")]
+    for(let i in HTMLgrids){
+        let colors = data.players[i].grid
+        let grid = HTMLgrids[i]
+        if (!colors) continue;
+        for(let i in colors){
+            grid.removeChild(grid.children[0])
+            let color = document.createElement("div")
+            color.id = colors[i]
+            color.style = `background-color: ${colors[i]}; border: 2px solid grey;`
+            grid.appendChild(color)
+        }
+    }
+}
+
+function delete_grids() {
+    let grids = ["yourgrid", "theirgrid", "colorgrid"]
+    for (let g of grids) {
+        grid = getEl(g)
+        console.log(grid)
+        while (grid.lastChild) {
+            grid.removeChild(grid.children[0])
+        }
     }
 }

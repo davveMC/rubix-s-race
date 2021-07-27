@@ -1,12 +1,8 @@
-// require("./js-QoL-main/js-QoL-main/array.js")
-// require("./js-QoL-main/js-QoL-main/number.js")
 const fs = require("fs")
 const express = require("express")
 const http = require("http")
 const websocketServer = require("websocket").server
-const { checkServerIdentity } = require("tls")
-const { captureRejectionSymbol } = require("events")
-// const { exit } = require("process")
+const { client } = require("websocket")
 
 const app = express()
 const port = 8123 || process.env.PORT
@@ -105,11 +101,8 @@ function handleMessage(client, msg){
     rooms[client.room_id].leave(client)
     // console.log(rooms)
     }
-    if(method == "hit"){
-        rooms[client.room_id].game.hit(client)
-    }
-    if(method == "stand"){
-        rooms[client.room_id].game.stand(client)
+    if(method == "move"){
+        rooms[client.room_id].game.move(client, data)
     }
     if(method == "start_game"){
         rooms[client.room_id].start_game()
@@ -121,6 +114,7 @@ function send(connection, method, data){
     "method": method,
     "data": data
     }
+    console.log(payLoad)
     connection.send(JSON.stringify(payLoad))
 }
 function broadcast(method, data, senderId){
@@ -164,7 +158,6 @@ class Client{
     this.id = id
     this.room_id = room_id
     this.admin = false
-    this.stand = false
     }
 }
 
@@ -224,16 +217,21 @@ class Room{
         this.ids = Object.values(this.clients).map(client => client.id)
         let game = new Game(this.ids, this.id)
         games[this.id] = game 
-        game.deal_cards()
         this.game_active = true
         this.game = game
     }
+    restart_game(){
+        delete(games[this.id])
+        this.start_game()
+        console.log(games)
+    }
 }
+
 
 class Game{
     constructor(ids, room_id){
         this.playerids = ids
-        this.players = {}
+        this.players = rooms[room_id].clients
         this.room_id = room_id
         this.timeout = 30
         this.ongoing = false
@@ -244,37 +242,79 @@ class Game{
     }
     game_data(){
         let data = {
-            "players": this.players
+            "players": Object.values(this.players).map(player=>{
+                let {name, id, room_id, admin, stand, grid} = player
+                return {name, id, room_id, admin, stand, grid}
+            })
         }
         return data
     }
-
-
-    game_result(){
-        let data = {}
-        let alltotals = Object.values(this.players).map(client => client.total)
-        let diff = []
-        for(let i in alltotals){
-            diff.push(Math.abs(21-alltotals[i]))
-        }
-        data.players = this.players
-        data.players.loser = []
-        let p = diff.indexOf(Math.max(diff))
-        for(let item of Object.keys(this.players)){
-            console.log(item)
-            console.log("Yes tihs djwekojdlwajdlkjalksdw----_daS-dW-aSDw")
-            console.log(  data  )
-            console.log(this.players[item].total)
-            if (this.players[item].total == alltotals[p]){
-                data.players.loser.push(item)
-            }
-        }
-        
-        return data 
+    broadcast_data(method, data){
+        console.log("Broadcasting data:", )
+        rooms[this.room_id].broadcast(method, data)
     }
+
+    move(client, data){
+        console.log("moving")
+        if(!this.players[client.id].grid){
+            console.log("Creating Grid")
+            this.players[client.id].grid = create_colors()
+        }
+        let empty = this.players[client.id].grid.indexOf("empty")
+        console.log("Moving Grid")
+        // console.log(this.players[client.id].grid)
+        // move grid
+        console.log((empty+1)%5)
+        switch (data.key) {
+            case "s":
+                if(this.players[client.id].grid[empty+5]){
+                    this.players[client.id].grid[empty] = this.players[client.id].grid[empty+5]
+                    this.players[client.id].grid[empty+5] = "empty"
+                }
+                // console.log(this.players)
+                break
+            case "a":
+                if (this.players[client.id].grid[empty-1] && (empty+1)%5 != 1) {
+                    this.players[client.id].grid[empty] = this.players[client.id].grid[empty-1]
+                    this.players[client.id].grid[empty-1] = "empty"
+                }
+                break
+            case "w":
+                if (this.players[client.id].grid[empty-5]) {
+                    this.players[client.id].grid[empty] = this.players[client.id].grid[empty-5]
+                    this.players[client.id].grid[empty-5] = "empty"
+                }
+                break
+            case "d":
+                if (this.players[client.id].grid[empty+1] && (empty+1)%5 != 0) {
+                    this.players[client.id].grid[empty] = this.players[client.id].grid[empty+1]
+                    this.players[client.id].grid[empty+1] = "empty"
+                }
+                break
+            case " ":
+                this.correct_grid(client.grid, client.id)
+                break
+        }
+        // end
+        this.broadcast_data("grids", this.game_data())
+        
+    }
+
     shuffle_colors(){
         let colors = shuffle(repeat(["red", "blue", "yellow", "orange", "black", "white"], 4))
         return [colors[0],colors[1],colors[2],colors[3],colors[4],colors[5],colors[6],colors[7],colors[8]]
+    }
+    correct_grid(grid, id){
+        let num = [6,7,8,11,12,13,16,17,18]
+        let g = []
+        for(let n of num) {
+            g.push(grid[n])
+        }
+        if(this.rubixgrid.toString() == g.toString() || true) {
+            console.log("Winner: ", id)
+            this.broadcast_data("game_result", {"winner": id})
+            rooms[this.room_id].restart_game()
+        }
     }
 }
 
@@ -292,4 +332,22 @@ function repeat(arr, n){
     var a = [];
     for (var i=0;i<n;[i++].push.apply(a,arr));
     return a;
-  }
+}
+
+function create_colors(){
+    var colors = ["red", "blue", "yellow", "orange", "black"]
+    let allcolors = []
+    for(let color of colors){
+        for(let i=0; i<4; i++) {
+            if(color == "blue" && i == 0) {
+                allcolors.push("empty")
+            }
+            else if(color != "red" && i == 0) {
+                allcolors.push("white")
+            }
+            allcolors.push(color)
+        }
+    }
+    allcolors.push("white")
+    return allcolors
+}

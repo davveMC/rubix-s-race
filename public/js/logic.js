@@ -1,31 +1,17 @@
-function calc_hand(){
-    let total = 0
-    for(let card of hand){
-    card = card[0]
-    if (Number(card)){
-        total += Number(card)
-    } else {
-        switch(card){
-        case "K":
-            total += 10;
-            break;
-        case "Q":
-            total += 10;
-            break;
-        case "J":
-            total += 10;
-            break;
-        case "A":
-            if (total <= 10) {
-            total += 11  
-            } else {
-            total += 1
+function create_colors(){
+    var colors = ["red", "blue", "yellow", "orange", "black"]
+    let allcolors = []
+    for(let color of colors){
+        for(let i=0; i<4; i++) {
+            if(color == "blue" && i == 0) {
+                allcolors.push("empty")
             }
+            else if(color != "red" && i == 0) {
+                allcolors.push("white")
+            }
+            allcolors.push(color)
         }
     }
-    }
-    hand_sum = total
-    if (total > 21) {
-        send("stand", "")
-    }
+    allcolors.push("white")
+    return allcolors
 }

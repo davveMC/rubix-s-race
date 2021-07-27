@@ -31,13 +31,6 @@ function back() {
 }
 
 function startgame() {
+    game_is_active = true
     send("start_game", "")
-}
-
-function hit() {
-    send('hit', 'null')
-}
-
-function stand() {
-    send('stand', 'null')
 }
