@@ -42,6 +42,7 @@ ws.onmessage = message => {
             myid = data
             break
         case "game_result":
+            ding.play()
             delete_grids()
             console.log(data)
             if (data.winner == myid){

@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <title>Multiplayer Game</title>
     <link href="./styles/stylesheet.css" rel="stylesheet"></link>
-    <link href="./styles/main-menu.css" rel="stylesheet"></link>
-    <link href="./styles/lobby.css" rel="stylesheet"></link>
-    <link href="./styles/game.css" rel="stylesheet"></link>
+    <link href="./styles/main-menu.css"  rel="stylesheet"></link>
+    <link href="./styles/lobby.css"      rel="stylesheet"></link>
+    <link href="./styles/game.css"       rel="stylesheet"></link>
+    <link href="./styles/switch.css"     rel="stylesheet"></link>
+
 </head>
+
 <body>
     <div id="main-menu" class="game-menu">
         <p class="menu-logo unselectable">Rubix's Race!</p>
@@ -27,27 +30,36 @@
         </div>
     </div>
     <div id="game" class="game">
+        <div>
+            <!-- <p class="info"><b>PRESS SPACE TO SUBMIT</b></p> -->
+        </div>
+        <label class="switch">
+            <input type="checkbox" onclick="keyIndex^=1;">
+            <span class="slider round"></span>
+        </label>
         <div class="container">
             <div id="grid1" class="grid1"></div>
+            <div class="square1"></div>
             <div class="name1">
                 <h1 id = "name1">examplename69</h1>
                 <h1 id = "score1">Score: 0</h1>
             </div>
-            <div id="grid1", class="grid1"></div>
+            <div id="grid2", class="grid2"></div>
+            <div class="square2"></div>
             <div class="name2">
                 <h1 id = "name2">examplename420</h1>
                 <h1 id = "score2">Score: 0</h1>
             </div>
-            <div id="grid2", class="grid2"></div>
+            <div id="colorgrid", class="colorgrid"></div>
         </div>
         <canvas id="canvas">
         </canvas>
     </div>
-    <script src="./js/helpfulstuff.js"></script>
+    <script src="./js/names.js"></script>
+    <script src="./js/main.js"></script>
     <script src="./js/buttons.js"></script>
     <script src="./js/input_fields.js"></script>
     <script src="./js/keyboard_input.js"></script>
     <script src="./js/client.js"></script>
-    <script src="./js/main.js"></script>
 </body>
 </html>

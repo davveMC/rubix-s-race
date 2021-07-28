@@ -123,3 +123,70 @@ canvas {
     text-align: center;
 
 }
+
+.square1 {
+    border: 4px solid rgb(0, 0, 0);
+    border-radius: 8px;
+    /* background-color: rgba(128, 128, 128, 0.472); */
+    height: 355px;
+    width: 355px;
+    position: absolute;
+    z-index: -1;
+
+    left: calc(5% + 122.5px);
+    bottom: calc(50%);
+    transform: translate(0, 50%);
+}
+
+.square2 {
+    border: 4px solid rgb(0, 0, 0);
+    border-radius: 8px;
+    /* background-color: rgba(128, 128, 128, 0.472); */
+    height: 355px;
+    width: 355px;
+    position: absolute;
+    z-index: -1;
+
+    right: calc(5% + 122.5px);
+    bottom: calc(50%);
+    transform: translate(0, 50%);
+}
+
+.info {
+    position: relative;
+    font-size: 4em;
+    text-align: center;
+    top: 90%;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    /* bottom: calc(50% + 300px); */
+}
+
+.keyIndex {
+    position: absolute;
+    top: 50%;
+    transform: translate(50%,calc(-50% + 150px));
+    right: 50%;
+    z-index: 1;
+}
+
+.keyIndex {
+	background: linear-gradient(to bottom, #44c767 5%, #2a78bd 100%);
+	background-color: #44c767;
+	border-radius: 21px;
+	border: 4px solid #ffffff;
+	display: inline-block;
+	cursor: pointer;
+	color: #ffffff;
+	font-family: Arial;
+	font-size: 28px;
+	font-weight: bold;
+	padding: 10px 24px;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px #2f6627;
+}
+.keyIndex:hover {
+	background-color: #2a78bd;
+}
+.keyIndex:active {
+}

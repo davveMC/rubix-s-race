@@ -1,53 +1,103 @@
-// Declare as variable
-let canvas;
-let context;
-let secondsPassed;
-let oldTimeStamp;
-let fps;
-let width;
-let height;
-let cards;
-// Listen to the onLoad event
-window.onload = init;
+var game_is_active = false
+const getEl = id => document.getElementById(id)
+const ding = new Audio("../assets/ding.mp3")
 
-// Trigger init function when the page has loaded
-function init() {
-    canvas = getEl('canvas');
-    context = canvas.getContext('2d');
-    context.canvas.width  = window.innerWidth;
-    context.canvas.height = window.innerHeight;
-    width = context.canvas.width
-    height = context.canvas.height
-    // Request an animation frame for the first time
-    // The gameLoop() function will be called as a callback of this request
-    requestAnimationFrame(gameLoop);
+function addp(data) {
+    let players = data[0]
+    let player_id = data[1]
+    let parent = getEl("smallerbox")
+    while(parent.children[1]){
+        parent.removeChild(parent.lastChild)
+    }
+    for (i in players) {
+        // console.log(players)
+        plr = players[i]
+        let player = document.createElement("div")
+        player.innerHTML = plr
+        player.id = plr
+        parent.appendChild(player)
+
+        // let image = document.createElement("input")
+        // image.type = "image"
+        // image.src = "./assets/kick.png"
+        // image.onclick = () => send("kick", player_id[i]);
+        // getEl(plr).appendChild(image)
+    }
+    getEl("name1").innerHTML = data[0][0]
+    getEl("name2").innerHTML = data[0][1] || "There's no player here because YOU don't have any friends"
 }
 
-function gameLoop(timeStamp) {
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    // Calculate the number of seconds passed since the last frame
-    secondsPassed = (timeStamp - oldTimeStamp) / 1000;
-    oldTimeStamp = timeStamp;
-    // Calculate fps
-    fps = Math.round(1 / secondsPassed);
-    // Draw number to the screen
-    context.clearRect(10, 30, 2000, 600);
-    context.font = '25px Arial';
-    context.fillStyle = 'black';
-    context.fillText("FPS: " + fps, 10, 30);
-    // Perform the drawing operation
-    draw();
-    // The loop function has reached it's end
-    // Keep requesting new frames
-    requestAnimationFrame(gameLoop);
+function draw_grid(data){
+    let parent = getEl("colorgrid")
+    // console.log(parent)
+    for(let i in data){
+        let color = document.createElement("div")
+        color.id = data[i]
+        color.style = `background-color: ${data[i]}; border: 2px solid grey;`
+        parent.appendChild(color)
+    }
 }
 
-function draw() {
+function draw_grids(){
+    let colors = create_colors()
+    for(let id_ of ["grid1", "grid2"]) {
+        let parent = getEl(id_)
+        // console.log(colors, parent)
+        for(let i in colors){
+            let color = document.createElement("div")
+            color.id = colors[i]
+            color.style = `background-color: ${colors[i]}; border: 2px solid grey;`
+            parent.appendChild(color)
+        }
+    }
 }
 
-window.addEventListener("resize", event => {     
-    context.canvas.width  = window.innerWidth;
-    context.canvas.height = window.innerHeight;
-    width = window.innerWidth;
-    height = window.innerHeight;
-})
+function update_grids(data) {
+    try{
+        let HTMLgrids = [getEl("grid1"), getEl("grid2")]
+        for(let i in HTMLgrids){
+            let colors = data.players[i]["grid"]
+            let grid = HTMLgrids[i]
+            if (!colors) continue;
+            for(let i in colors){
+                grid.removeChild(grid.firstChild)
+                let color = document.createElement("div")
+                color.id = colors[i]
+                color.style = `background-color: ${colors[i]}; border: 2px solid grey;`
+                grid.appendChild(color)
+            }
+        }
+    } catch(err){
+    }
+
+}
+
+function delete_grids() {
+    let grids = ["grid1", "grid2", "colorgrid"]
+    for (let g of grids) {
+        let grid = getEl(g)
+        // console.log(grid)
+        while (grid.firstChild) {
+            grid.removeChild(grid.lastChild)
+        }
+    }
+    // draw_grids()
+}
+
+function create_colors(){
+    var colors = ["red", "blue", "yellow", "orange", "green"]
+    let allcolors = []
+    for(let color of colors){
+        for(let i=0; i<4; i++) {
+            if(color == "blue" && i == 0) {
+                allcolors.push("empty")
+            }
+            else if(color != "red" && i == 0) {
+                allcolors.push("white")
+            }
+            allcolors.push(color)
+        }
+    }
+    allcolors.push("white")
+    return allcolors
+}
