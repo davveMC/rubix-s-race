@@ -5,7 +5,7 @@ const websocketServer = require("websocket").server
 const { client } = require("websocket")
 
 const app = express()
-const port = 8123 || process.env.PORT
+const port = 6567 || process.env.PORT
 app.use(express.static(__dirname + "/public"))
 app.listen(port, () => console.log("App listening on "+port))
 

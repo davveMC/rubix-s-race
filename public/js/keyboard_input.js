@@ -19,4 +19,5 @@ document.addEventListener("keyup", event => {
     if (key == "shift"){
         shift = false
     }
+    getEl("win-img").style.transform = 'translate(100%, 200px);'
 })

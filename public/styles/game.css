@@ -153,13 +153,16 @@ canvas {
 }
 
 .info {
-    position: relative;
+    position: absolute;
     font-size: 4em;
     text-align: center;
     top: 90%;
     border-top: 2px solid black;
     border-bottom: 2px solid black;
-    /* bottom: calc(50% + 300px); */
+    transform: translate(50%, -50%);
+    right: 50%;
+    margin: 0;
+    padding: 0;
 }
 
 .keyIndex {
@@ -189,4 +192,19 @@ canvas {
 	background-color: #2a78bd;
 }
 .keyIndex:active {
+}
+
+.win-div{
+    /* position: relative; */
+    top: -20%;
+    left: 50%;
+}
+
+.win-img{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%);
+    transition: all 1.5s ease;
+    display: none;
 }
