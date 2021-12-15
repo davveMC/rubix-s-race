@@ -7,14 +7,13 @@ const path = require("path")
 
 const app = express()
 const port = process.env.PORT || 3000
-app.use(express.static(path.join(__dirname, './public')))
-app.listen(port, () => console.log("App listening on "+port))
+//app.listen(port, () => console.log("App listening on "+port))
 
-/*
 // Server
 const ServerPort = process.env.PORT || 8080
 
 const httpServer = http.createServer()
+httpServer.use(express.static(path.join(__dirname, './public')))
 httpServer.listen(ServerPort, () => console.log("Server listening on "+ServerPort));
 
 const wsServer = new websocketServer({
