@@ -5,13 +5,13 @@ const websocketServer = require("websocket").server
 const { client } = require("websocket")
 
 const app = express()
-const port = 6567 || process.env.PORT
+const port = 80 || process.env.PORT
 app.use(express.static(__dirname + "/public"))
 app.listen(port, () => console.log("App listening on "+port))
 
 
 // Server
-const ServerPort = 25565
+const ServerPort = 8123
 
 const httpServer = http.createServer()
 httpServer.listen(ServerPort, () => console.log("Server listening on "+ServerPort));
