@@ -10,7 +10,7 @@ const port = process.env.PORT || 3000
 app.use(express.static(path.join(__dirname, './public')))
 app.listen(port, () => console.log("App listening on "+port))
 
-
+let code = `
 // Server
 const ServerPort = process.env.PORT || 8080
 
@@ -357,3 +357,4 @@ function create_colors(){
     allcolors.push("white")
     return allcolors
 }
+`
