@@ -68,14 +68,6 @@ function handleMessage(client, msg){
     const data = msg.data
 
     if(method == "connect"){
-    /*
-    {
-        method: "connect"
-        data: {
-        name: "example_name"
-        room: "room_id"
-        }
-    */
     client.name = data.name
     client.room_id = data.room_id
     if (joinRoom(client, data.room_id)) {
@@ -358,3 +350,12 @@ function create_colors(){
     return allcolors
 }
 */
+
+    /* connect code
+    {
+        method: "connect"
+        data: {
+        name: "example_name"
+        room: "room_id"
+        }
+    */
