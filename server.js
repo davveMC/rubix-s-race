@@ -6,13 +6,13 @@ const { client } = require("websocket")
 const path = require("path")
 
 const app = express()
-const port = 80 || process.env.PORT
+const port = process.env.PORT || 3000
 app.use(express.static(path.join(__dirname, './public')))
 app.listen(port, () => console.log("App listening on "+port))
 
 
 // Server
-const ServerPort = 8123
+const ServerPort = process.env.PORT || 8080
 
 const httpServer = http.createServer()
 httpServer.listen(ServerPort, () => console.log("Server listening on "+ServerPort));
