@@ -348,7 +348,6 @@ function create_colors(){
     allcolors.push("white")
     return allcolors
 }
-*/
 
     /* connect code
     {
