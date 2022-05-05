@@ -1,4 +1,4 @@
-let serverAdress = "https://rubixmultiplayer.herokuapp.com/" //"localhost:25565"
+let serverAdress = "mychild.strangled.net:8080" //"localhost:25565"
 var game_data;
 var myid;
 var score1 = 0
